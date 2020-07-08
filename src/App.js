@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super()
+
+    this.inputRef = React.createRef();
+    this.state = {
+      tasks: []
+    }
+  }
+
+  addItem(event) {
+    event.preventDefault();
+    let newTask = { title: this.inputRef.current.value }
+    this.setState({
+      tasks: this.state.tasks.concat([newTask])
+    })
+    this.inputRef.current.value = null
+  }
+
+  render() {
+    let liTasks = this.state.tasks.map((task, index) => <li key={index}>{task.title}</li>)
+
+    return (
+      <div className="App">
+        <form onSubmit={this.addItem.bind(this)}>
+          <input ref={this.inputRef}></input>
+        </form>
+        <ul>
+          {liTasks}
+        </ul>
+      </div>
+    )
+  };
 }
 
 export default App;
