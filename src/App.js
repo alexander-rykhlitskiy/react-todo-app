@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
+import TasksList from './components/TasksList';
 
 class App extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.inputRef = React.createRef();
     this.state = {
@@ -21,16 +22,12 @@ class App extends React.Component {
   }
 
   render() {
-    let liTasks = this.state.tasks.map((task, index) => <li key={index}>{task.title}</li>)
-
     return (
       <div className="App">
         <form onSubmit={this.addItem.bind(this)}>
           <input ref={this.inputRef}></input>
         </form>
-        <ul>
-          {liTasks}
-        </ul>
+        <TasksList tasks={this.state.tasks} />
       </div>
     )
   };
